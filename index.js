@@ -11,6 +11,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
-app.listen(port, () => {
-    console.log("Servidor AYShop Iniciado...");
-})
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/27017').then(() => {
+    app.listen(port, () => {
+        console.log('Servidor AYShop Iniciado...');
+    })
+}).catch(() => {
+    console.log('No se ha podido conectar a la BD');
+});
